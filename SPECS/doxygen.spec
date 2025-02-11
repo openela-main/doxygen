@@ -10,7 +10,7 @@ Summary: A documentation system for C/C++
 Name:    doxygen
 Epoch:   1
 Version: 1.9.1
-Release: 11%{?dist}
+Release: 12%{?dist}
 
 # No version is specified.
 License: GPL+
@@ -25,6 +25,7 @@ Patch1: doxgen-1.9.1-crash-when-parsing-config-file.patch
 Patch2: doxgen-1.9.1-crash-when-parsing-config-file-part2.patch
 Patch3: doxygen-1.9.1-Coverity_issues.patch
 Patch4: doxygen-1.9.1-crash_in_docparser.patch
+Patch5: doxygen-1.9.1-jquery-CVE-2020-11023-CVE-2020-11022.patch
 
 BuildRequires: %{_bindir}/python3
 BuildRequires: gcc-c++ gcc
@@ -298,6 +299,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE1}
 %endif
 
 %changelog
+* Thu Feb 06 2025 Than Ngo <than@redhat.com> - 1:1.9.1-12
+- Resolves: RHEL-78146, CVE-2020-11023, CVE-2020-11022
+
 * Thu Aug 19 2021 Than Ngo <than@redhat.com> - 1:1.9.1-11
 - Resolves: #1990081, Enable LTO
 
