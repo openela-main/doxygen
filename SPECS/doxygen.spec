@@ -8,7 +8,7 @@ Summary: A documentation system for C/C++
 Name:    doxygen
 Epoch:   1
 Version: 1.8.14
-Release: 12%{?dist}
+Release: 13%{?dist}
 
 # No version is specified.
 License: GPL+
@@ -17,6 +17,8 @@ Source0: ftp://ftp.stack.nl/pub/users/dimitri/%{name}-%{version}.src.tar.gz
 # this icon is part of kdesdk
 Source1: doxywizard.png
 Source2: doxywizard.desktop
+
+Patch0: doxygen-1.8.14-jquery-CVE-2020-11023-CVE-2020-11022.patch
 
 # upstream patches
 
@@ -45,7 +47,7 @@ BuildRequires: zlib-devel
 BuildRequires: flex
 BuildRequires: bison
 BuildRequires: cmake
-%if %{xapian_core_support} == "ON"
+%if "%{xapian_core_support}" == "ON"
 BuildRequires: xapian-core-devel
 %endif
 Requires: perl-interpreter
@@ -138,7 +140,7 @@ cp doc/*.1 %{buildroot}/%{_mandir}/man1/
 rm -f %{buildroot}/%{_mandir}/man1/doxywizard.1*
 %endif
 
-%if %{xapian_core_support} == "OFF"
+%if "%{xapian_core_support}" == "OFF"
 rm -f %{buildroot}/%{_mandir}/man1/doxyindexer.1* %{buildroot}/%{_mandir}/man1/doxysearch.1*
 %endif
 
@@ -153,14 +155,14 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
 %doc LANGUAGE.HOWTO README.md
 %license LICENSE
 %if ! 0%{?_module_build}
-%if %{xapian_core_support} == "ON"
+%if "%{xapian_core_support}" == "ON"
 %{_bindir}/doxyindexer
 %{_bindir}/doxysearch*
 %endif
 %endif
 %{_bindir}/doxygen
 %{_mandir}/man1/doxygen.1*
-%if %{xapian_core_support} == "ON"
+%if "%{xapian_core_support}" == "ON"
 %{_mandir}/man1/doxyindexer.1*
 %{_mandir}/man1/doxysearch.1*
 %endif
@@ -178,6 +180,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
 %endif
 
 %changelog
+* Fri Feb 07 2025 Than Ngo <than@redhat.com> - 1:1.8.14-13
+- Resolves: RHEL-78141, CVE-2020-11023, CVE-2020-11022
+
 * Mon May 13 2019 Than Ngo <than@redhat.com> - 1:1.8.14-12
 - Related: #1693329 - rpmdiff execshield failures, rebuilt against new annobin
 
