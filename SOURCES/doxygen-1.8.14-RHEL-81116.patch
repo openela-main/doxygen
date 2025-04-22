@@ -1,0 +1,1537 @@
+diff -Nur doxygen-1.8.14/templates/html.orig/doxygen.css doxygen-1.8.14/templates/html/doxygen.css
+--- doxygen-1.8.14/templates/html.orig/doxygen.css	2017-10-31 20:36:00.000000000 +0100
++++ doxygen-1.8.14/templates/html/doxygen.css	2025-03-04 13:22:48.992773395 +0100
+@@ -53,17 +53,24 @@
+ 	font-weight: bold;
+ }
+ 
+-div.multicol {
++ul.multicol {
+ 	-moz-column-gap: 1em;
+ 	-webkit-column-gap: 1em;
++	column-gap: 1em;
+ 	-moz-column-count: 3;
+ 	-webkit-column-count: 3;
++	column-count: 3;
+ }
+ 
+ p.startli, p.startdd {
+ 	margin-top: 2px;
+ }
+ 
++th p.starttd, th p.intertd, th p.endtd {
++        font-size: 100%;
++        font-weight: 700;
++}
++
+ p.starttd {
+ 	margin-top: 0px;
+ }
+@@ -80,6 +87,15 @@
+ 	margin-bottom: 2px;
+ }
+ 
++p.interli {
++}
++
++p.interdd {
++}
++
++p.intertd {
++}
++
+ /* @end */
+ 
+ caption {
+@@ -87,30 +103,96 @@
+ }
+ 
+ span.legend {
+-        font-size: 70%;
+-        text-align: center;
++	font-size: 70%;
++	text-align: center;
+ }
+ 
+ h3.version {
+-        font-size: 90%;
+-        text-align: center;
++	font-size: 90%;
++	text-align: center;
+ }
+ 
+-div.qindex, div.navtab{
+-	background-color: ##ee;
+-	border: 1px solid ##b0;
+-	text-align: center;
++div.navtab {
++	border-right: 1px solid ##b0;
++	padding-right: 15px;
++	text-align: right;
++	line-height: 110%;
+ }
+ 
+-div.qindex, div.navpath {
++div.navtab table {
++	border-spacing: 0;
++}
++
++td.navtab {
++	padding-right: 6px;
++	padding-left: 6px;
++}
++td.navtabHL {
++	background-image: url('tab_a.png');
++	background-repeat:repeat-x;
++	padding-right: 6px;
++	padding-left: 6px;
++}
++
++td.navtabHL a, td.navtabHL a:visited {
++	color: #fff;
++	text-shadow: 0px 1px 1px rgba(0, 0, 0, 1.0);
++}
++
++a.navtab {
++	font-weight: bold;
++}
++
++div.qindex{
++	text-align: center;
+ 	width: 100%;
+ 	line-height: 140%;
++	font-size: 130%;
++	color: #A0A0A0;
+ }
+ 
+-div.navtab {
+-	margin-right: 15px;
++dt.alphachar{
++	font-size: 180%;
++	font-weight: bold;
+ }
+ 
++.alphachar a{
++	color: black;
++}
++
++.alphachar a:hover, .alphachar a:visited{
++	text-decoration: none;
++}
++
++.classindex dl {
++	padding: 25px;
++	column-count:1
++}
++
++.classindex dd {
++	display:inline-block;
++	margin-left: 50px;
++	width: 90%;
++	line-height: 1.15em;
++}
++
++.classindex dl.odd {
++	background-color: ##F9;
++}
++
++@media(min-width: 1120px) {
++	.classindex dl {
++		column-count:2
++	}
++}
++
++@media(min-width: 1320px) {
++	.classindex dl {
++		column-count:3
++	}
++}
++
++
+ /* @group Link Styling */
+ 
+ a {
+@@ -127,19 +209,8 @@
+ 	text-decoration: underline;
+ }
+ 
+-a.qindex {
+-	font-weight: bold;
+-}
+-
+-a.qindexHL {
+-	font-weight: bold;
+-	background-color: ##AA;
+-	color: #ffffff;
+-	border: 1px double ##98;
+-}
+-
+ .contents a.qindexHL:visited {
+-        color: #ffffff;
++        color: ##ff;
+ }
+ 
+ a.el {
+@@ -150,11 +221,11 @@
+ }
+ 
+ a.code, a.code:visited, a.line, a.line:visited {
+-	color: #4665A2; 
++	color: ##60; 
+ }
+ 
+ a.codeRef, a.codeRef:visited, a.lineRef, a.lineRef:visited {
+-	color: #4665A2; 
++	color: ##60; 
+ }
+ 
+ /* @end */
+@@ -163,9 +234,28 @@
+ 	margin-left: -1cm;
+ }
+ 
++ul {
++  overflow: hidden; /*Fixed: list item bullets overlap floating elements*/
++}
++
++#side-nav ul {
++  overflow: visible; /* reset ul rule for scroll bar in GENERATE_TREEVIEW window */
++}
++
++#main-nav ul {
++  overflow: visible; /* reset ul rule for the navigation bar drop down lists */
++}
++
++.fragment {
++  text-align: left;
++  direction: ltr;
++  overflow-x: auto; /*Fixed: fragment lines overlap floating elements*/
++  overflow-y: hidden;
++}
++
+ pre.fragment {
+-        border: 1px solid #C4CFE5;
+-        background-color: #FBFCFD;
++        border: 1px solid ##CC;
++        background-color: ##FC;
+         padding: 4px 6px;
+         margin: 4px 8px 4px 2px;
+         overflow: auto;
+@@ -177,8 +267,8 @@
+ }
+ 
+ div.fragment {
+-        padding: 0px;
+-        margin: 4px 8px 4px 2px;
++  padding: 0 0 1px 0; /*Fixed: last line underline overlap border*/
++  margin: 4px 8px 4px 2px;
+ 	background-color: ##FC;
+ 	border: 1px solid ##CC;
+ }
+@@ -248,7 +338,7 @@
+ div.ah, span.ah {
+ 	background-color: black;
+ 	font-weight: bold;
+-	color: #ffffff;
++	color: ##ff;
+ 	margin-bottom: 3px;
+ 	margin-top: 3px;
+ 	padding: 0.2em;
+@@ -324,7 +414,7 @@
+ 	
+ }
+ 
+-img.formulaInl {
++img.formulaInl, img.inline {
+ 	vertical-align: middle;
+ }
+ 
+@@ -402,6 +492,13 @@
+         padding: 0 12px 0 16px;
+ }
+ 
++blockquote.DocNodeRTL {
++   border-left: 0;
++   border-right: 2px solid ##AA;
++   margin: 0 4px 0 24px;
++   padding: 0 16px 0 12px;
++}
++
+ /* @end */
+ 
+ /*
+@@ -488,7 +585,7 @@
+ }
+ 
+ .memSeparator {
+-        border-bottom: 1px solid #DEE4F0;
++        border-bottom: 1px solid ##E2;
+         line-height: 1px;
+         margin: 0px;
+         padding: 0px;
+@@ -498,7 +595,7 @@
+         white-space: nowrap;
+ }
+ 
+-.memItemRight {
++.memItemRight, .memTemplItemRight {
+ 	width: 100%;
+ }
+ 
+@@ -618,7 +715,7 @@
+         border-top-width: 0;
+         background-image:url('nav_g.png');
+         background-repeat:repeat-x;
+-        background-color: #FFFFFF;
++        background-color: ##ff;
+         /* opera specific markup */
+         border-bottom-left-radius: 4px;
+         border-bottom-right-radius: 4px;
+@@ -666,17 +763,17 @@
+         padding-left: 0px;
+ }       
+ 
+-.params .paramname, .retval .paramname {
++.params .paramname, .retval .paramname, .tparams .paramname, .exception .paramname {
+         font-weight: bold;
+         vertical-align: top;
+ }
+         
+-.params .paramtype {
++.params .paramtype, .tparams .paramtype {
+         font-style: italic;
+         vertical-align: top;
+ }       
+         
+-.params .paramdir {
++.params .paramdir, .tparams .paramdir {
+         font-family: "courier new",courier,monospace;
+         vertical-align: top;
+ }
+@@ -890,7 +987,7 @@
+ 
+ table.doxtable th {
+ 	background-color: ##47;
+-	color: #FFFFFF;
++	color: ##ff;
+ 	font-size: 110%;
+ 	padding-bottom: 4px;
+ 	padding-top: 5px;
+@@ -1081,72 +1178,143 @@
+ 	padding: 5px 5px 5px 10px;
+ }
+ 
+-dl
+-{
+-        padding: 0 0 0 10px;
+-}
+-
+-/* dl.note, dl.warning, dl.attention, dl.pre, dl.post, dl.invariant, dl.deprecated, dl.todo, dl.test, dl.bug */
+-dl.section
+-{
+-	margin-left: 0px;
+-	padding-left: 0px;
++.PageDocRTL-title div.headertitle {
++  text-align: right;
++  direction: rtl;
+ }
+ 
+-dl.note
+-{
+-        margin-left:-7px;
+-        padding-left: 3px;
+-        border-left:4px solid;
+-        border-color: #D0C000;
+-}
+-
+-dl.warning, dl.attention
+-{
+-        margin-left:-7px;
+-        padding-left: 3px;
+-        border-left:4px solid;
+-        border-color: #FF0000;
+-}
+-
+-dl.pre, dl.post, dl.invariant
+-{
+-        margin-left:-7px;
+-        padding-left: 3px;
+-        border-left:4px solid;
+-        border-color: #00D000;
+-}
+-
+-dl.deprecated
+-{
+-        margin-left:-7px;
+-        padding-left: 3px;
+-        border-left:4px solid;
+-        border-color: #505050;
+-}
+-
+-dl.todo
+-{
+-        margin-left:-7px;
+-        padding-left: 3px;
+-        border-left:4px solid;
+-        border-color: #00C0E0;
++dl {
++        padding: 0 0 0 0;
+ }
+ 
+-dl.test
+-{
+-        margin-left:-7px;
+-        padding-left: 3px;
+-        border-left:4px solid;
+-        border-color: #3030E0;
++/* dl.note, dl.warning, dl.attention, dl.pre, dl.post, dl.invariant, dl.deprecated, dl.todo, dl.test, dl.bug, dl.examples */
++dl.section {
++	margin-left: 0px;
++	padding-left: 0px;
+ }
+ 
+-dl.bug
+-{
+-        margin-left:-7px;
+-        padding-left: 3px;
+-        border-left:4px solid;
+-        border-color: #C08050;
++dl.section.DocNodeRTL {
++  margin-right: 0px;
++  padding-right: 0px;
++}
++
++dl.note {
++  margin-left: -7px;
++  padding-left: 3px;
++  border-left: 4px solid;
++  border-color: #D0C000;
++}
++
++dl.note.DocNodeRTL {
++  margin-left: 0;
++  padding-left: 0;
++  border-left: 0;
++  margin-right: -7px;
++  padding-right: 3px;
++  border-right: 4px solid;
++  border-color: #D0C000;
++}
++
++dl.warning, dl.attention {
++  margin-left: -7px;
++  padding-left: 3px;
++  border-left: 4px solid;
++  border-color: #FF0000;
++}
++
++dl.warning.DocNodeRTL, dl.attention.DocNodeRTL {
++  margin-left: 0;
++  padding-left: 0;
++  border-left: 0;
++  margin-right: -7px;
++  padding-right: 3px;
++  border-right: 4px solid;
++  border-color: #FF0000;
++}
++
++dl.pre, dl.post, dl.invariant {
++  margin-left: -7px;
++  padding-left: 3px;
++  border-left: 4px solid;
++  border-color: #00D000;
++}
++
++dl.pre.DocNodeRTL, dl.post.DocNodeRTL, dl.invariant.DocNodeRTL {
++  margin-left: 0;
++  padding-left: 0;
++  border-left: 0;
++  margin-right: -7px;
++  padding-right: 3px;
++  border-right: 4px solid;
++  border-color: #00D000;
++}
++
++dl.deprecated {
++  margin-left: -7px;
++  padding-left: 3px;
++  border-left: 4px solid;
++  border-color: #505050;
++}
++
++dl.deprecated.DocNodeRTL {
++  margin-left: 0;
++  padding-left: 0;
++  border-left: 0;
++  margin-right: -7px;
++  padding-right: 3px;
++  border-right: 4px solid;
++  border-color: #505050;
++}
++
++dl.todo {
++  margin-left: -7px;
++  padding-left: 3px;
++  border-left: 4px solid;
++  border-color: #00C0E0;
++}
++
++dl.todo.DocNodeRTL {
++  margin-left: 0;
++  padding-left: 0;
++  border-left: 0;
++  margin-right: -7px;
++  padding-right: 3px;
++  border-right: 4px solid;
++  border-color: #00C0E0;
++}
++
++dl.test {
++  margin-left: -7px;
++  padding-left: 3px;
++  border-left: 4px solid;
++  border-color: #3030E0;
++}
++
++dl.test.DocNodeRTL {
++  margin-left: 0;
++  padding-left: 0;
++  border-left: 0;
++  margin-right: -7px;
++  padding-right: 3px;
++  border-right: 4px solid;
++  border-color: #3030E0;
++}
++
++dl.bug {
++  margin-left: -7px;
++  padding-left: 3px;
++  border-left: 4px solid;
++  border-color: #C08050;
++}
++
++dl.bug.DocNodeRTL {
++  margin-left: 0;
++  padding-left: 0;
++  border-left: 0;
++  margin-right: -7px;
++  padding-right: 3px;
++  border-right: 4px solid;
++  border-color: #C08050;
+ }
+ 
+ dl.section dd {
+@@ -1245,10 +1413,12 @@
+         font-weight:bold;
+         margin-right:10px;
+         padding:5px;
++        text-align:right;
++        width:52px;
+ }
+ 
+ dl.citelist dd {
+-        margin:2px 0;
++        margin:2px 0 2px 72px;
+         padding:5px 0;
+ }
+ 
+@@ -1263,6 +1433,11 @@
+         width: 200px;
+ }
+ 
++.PageDocRTL-title div.toc {
++  float: left !important;
++  text-align: right;
++}
++
+ div.toc li {
+         background: url("bdwn.png") no-repeat scroll 0 5px transparent;
+         font: 10px/1.2 Verdana,DejaVu Sans,Geneva,sans-serif;
+@@ -1271,6 +1446,12 @@
+         padding-top: 2px;
+ }
+ 
++.PageDocRTL-title div.toc li {
++  background-position-x: right !important;
++  padding-left: 0 !important;
++  padding-right: 10px;
++}
++
+ div.toc h3 {
+         font: bold 12px/1.2 Arial,FreeSans,sans-serif;
+ 	color: ##60;
+@@ -1300,6 +1481,32 @@
+         margin-left: 45px;
+ }
+ 
++span.emoji {
++        /* font family used at the site: https://unicode.org/emoji/charts/full-emoji-list.html
++         * font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", Times, Symbola, Aegyptus, Code2000, Code2001, Code2002, Musica, serif, LastResort;
++         */
++}
++
++.PageDocRTL-title div.toc li.level1 {
++  margin-left: 0 !important;
++  margin-right: 0;
++}
++
++.PageDocRTL-title div.toc li.level2 {
++  margin-left: 0 !important;
++  margin-right: 15px;
++}
++
++.PageDocRTL-title div.toc li.level3 {
++  margin-left: 0 !important;
++  margin-right: 30px;
++}
++
++.PageDocRTL-title div.toc li.level4 {
++  margin-left: 0 !important;
++  margin-right: 45px;
++}
++
+ .inherit_header {
+         font-weight: bold;
+         color: gray;
+@@ -1413,7 +1620,7 @@
+ }
+ 
+ #powerTip.n:after, #powerTip.ne:after, #powerTip.nw:after {
+-	border-top-color: #ffffff;
++	border-top-color: ##ff;
+ 	border-width: 10px;
+ 	margin: 0px -10px;
+ }
+@@ -1441,7 +1648,7 @@
+ }
+ 
+ #powerTip.s:after, #powerTip.se:after, #powerTip.sw:after {
+-	border-bottom-color: #ffffff;
++	border-bottom-color: ##ff;
+ 	border-width: 10px;
+ 	margin: 0px -10px;
+ }
+@@ -1468,7 +1675,7 @@
+ 	left: 100%;
+ }
+ #powerTip.e:after {
+-	border-left-color: #ffffff;
++	border-left-color: ##ff;
+ 	border-width: 10px;
+ 	top: 50%;
+ 	margin-top: -10px;
+@@ -1484,7 +1691,7 @@
+ 	right: 100%;
+ }
+ #powerTip.w:after {
+-	border-right-color: #ffffff;
++	border-right-color: ##ff;
+ 	border-width: 10px;
+ 	top: 50%;
+ 	margin-top: -10px;
+@@ -1517,7 +1724,6 @@
+ 
+ /* @group Markdown */
+ 
+-/*
+ table.markdownTable {
+ 	border-collapse:collapse;
+         margin-top: 4px;
+@@ -1529,68 +1735,59 @@
+ 	padding: 3px 7px 2px;
+ }
+ 
+-table.markdownTableHead tr {
+-}
+-
+-table.markdownTableBodyLeft td, table.markdownTable th {
+-	border: 1px solid ##37;
+-	padding: 3px 7px 2px;
++table.markdownTable tr {
+ }
+ 
+-th.markdownTableHeadLeft th.markdownTableHeadRight th.markdownTableHeadCenter th.markdownTableHeadNone {
++th.markdownTableHeadLeft, th.markdownTableHeadRight, th.markdownTableHeadCenter, th.markdownTableHeadNone {
+ 	background-color: ##47;
+-	color: #FFFFFF;
++	color: ##ff;
+ 	font-size: 110%;
+ 	padding-bottom: 4px;
+ 	padding-top: 5px;
+ }
+ 
+-th.markdownTableHeadLeft {
++th.markdownTableHeadLeft, td.markdownTableBodyLeft {
+ 	text-align: left
+ }
+ 
+-th.markdownTableHeadRight {
++th.markdownTableHeadRight, td.markdownTableBodyRight {
+ 	text-align: right
+ }
+ 
+-th.markdownTableHeadCenter {
++th.markdownTableHeadCenter, td.markdownTableBodyCenter {
+ 	text-align: center
+ }
+-*/
+ 
+-table.markdownTable {
+-	border-collapse:collapse;
+-        margin-top: 4px;
+-        margin-bottom: 4px;
+-}
+-
+-table.markdownTable td, table.markdownTable th {
+-	border: 1px solid ##37;
+-	padding: 3px 7px 2px;
++.DocNodeRTL {
++  text-align: right;
++  direction: rtl;
+ }
+ 
+-table.markdownTable tr {
++.DocNodeLTR {
++  text-align: left;
++  direction: ltr;
+ }
+ 
+-th.markdownTableHeadLeft, th.markdownTableHeadRight, th.markdownTableHeadCenter, th.markdownTableHeadNone {
+-	background-color: #374F7F;
+-	color: #FFFFFF;
+-	font-size: 110%;
+-	padding-bottom: 4px;
+-	padding-top: 5px;
++table.DocNodeRTL {
++   width: auto;
++   margin-right: 0;
++   margin-left: auto;
+ }
+ 
+-th.markdownTableHeadLeft, td.markdownTableBodyLeft {
+-	text-align: left
++table.DocNodeLTR {
++   width: auto;
++   margin-right: auto;
++   margin-left: 0;
+ }
+ 
+-th.markdownTableHeadRight, td.markdownTableBodyRight {
+-	text-align: right
++tt, code, kbd, samp
++{
++  display: inline-block;
++  direction:ltr; 
+ }
++/* @end */
+ 
+-th.markdownTableHeadCenter, td.markdownTableBodyCenter {
+-	text-align: center
++u {
++	text-decoration: underline;
+ }
+ 
+-
+-/* @end */
+diff -Nur doxygen-1.8.14/templates/html.orig/dynsections.js doxygen-1.8.14/templates/html/dynsections.js
+--- doxygen-1.8.14/templates/html.orig/dynsections.js	2017-12-24 11:20:24.000000000 +0100
++++ doxygen-1.8.14/templates/html/dynsections.js	2025-03-04 13:22:55.618929360 +0100
+@@ -1,25 +1,26 @@
+ /*
+- @licstart  The following is the entire license notice for the
+- JavaScript code in this file.
++ @licstart  The following is the entire license notice for the JavaScript code in this file.
+ 
+- Copyright (C) 1997-2017 by Dimitri van Heesch
++ The MIT License (MIT)
+ 
+- This program is free software; you can redistribute it and/or modify
+- it under the terms of the GNU General Public License as published by
+- the Free Software Foundation; either version 2 of the License, or
+- (at your option) any later version.
+-
+- This program is distributed in the hope that it will be useful,
+- but WITHOUT ANY WARRANTY; without even the implied warranty of
+- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- GNU General Public License for more details.
+-
+- You should have received a copy of the GNU General Public License along
+- with this program; if not, write to the Free Software Foundation, Inc.,
+- 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
++ Copyright (C) 1997-2020 by Dimitri van Heesch
+ 
+- @licend  The above is the entire license notice
+- for the JavaScript code in this file
++ Permission is hereby granted, free of charge, to any person obtaining a copy of this software
++ and associated documentation files (the "Software"), to deal in the Software without restriction,
++ including without limitation the rights to use, copy, modify, merge, publish, distribute,
++ sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
++ furnished to do so, subject to the following conditions:
++
++ The above copyright notice and this permission notice shall be included in all copies or
++ substantial portions of the Software.
++
++ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
++ BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
++ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++
++ @licend  The above is the entire license notice for the JavaScript code in this file
+  */
+ function toggleVisibility(linkObj)
+ {
+@@ -60,7 +61,7 @@
+       $(this).show();
+     } else if (l==level+1) {
+       i.removeClass('iconfclosed iconfopen').addClass('iconfclosed');
+-      a.html('&#9654;');
++      a.html('&#9658;');
+       $(this).show();
+     } else {
+       $(this).hide();
+@@ -87,7 +88,7 @@
+     // replace down arrow by right arrow for current row
+     var currentRowSpans = currentRow.find("span");
+     currentRowSpans.filter(".iconfopen").removeClass("iconfopen").addClass("iconfclosed");
+-    currentRowSpans.filter(".arrow").html('&#9654;');
++    currentRowSpans.filter(".arrow").html('&#9658;');
+     rows.filter("[id^=row_"+id+"]").hide(); // hide all children
+   } else { // we are SHOWING
+     // replace right arrow by down arrow for current row
+@@ -97,7 +98,7 @@
+     // replace down arrows by right arrows for child rows
+     var childRowsSpans = childRows.find("span");
+     childRowsSpans.filter(".iconfopen").removeClass("iconfopen").addClass("iconfclosed");
+-    childRowsSpans.filter(".arrow").html('&#9654;');
++    childRowsSpans.filter(".arrow").html('&#9658;');
+     childRows.show(); //show all children
+   }
+   updateStripes();
+diff -Nur doxygen-1.8.14/templates/html.orig/extsearch.js doxygen-1.8.14/templates/html/extsearch.js
+--- doxygen-1.8.14/templates/html.orig/extsearch.js	2017-10-31 20:36:00.000000000 +0100
++++ doxygen-1.8.14/templates/html/extsearch.js	2025-03-04 13:22:55.618929360 +0100
+@@ -1,25 +1,26 @@
+ /*
+- @licstart  The following is the entire license notice for the
+- JavaScript code in this file.
++ @licstart  The following is the entire license notice for the JavaScript code in this file.
+ 
+- Copyright (C) 1997-2017 by Dimitri van Heesch
++ The MIT License (MIT)
+ 
+- This program is free software; you can redistribute it and/or modify
+- it under the terms of the GNU General Public License as published by
+- the Free Software Foundation; either version 2 of the License, or
+- (at your option) any later version.
+-
+- This program is distributed in the hope that it will be useful,
+- but WITHOUT ANY WARRANTY; without even the implied warranty of
+- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- GNU General Public License for more details.
+-
+- You should have received a copy of the GNU General Public License along
+- with this program; if not, write to the Free Software Foundation, Inc.,
+- 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
++ Copyright (C) 1997-2020 by Dimitri van Heesch
+ 
+- @licend  The above is the entire license notice
+- for the JavaScript code in this file
++ Permission is hereby granted, free of charge, to any person obtaining a copy of this software
++ and associated documentation files (the "Software"), to deal in the Software without restriction,
++ including without limitation the rights to use, copy, modify, merge, publish, distribute,
++ sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
++ furnished to do so, subject to the following conditions:
++
++ The above copyright notice and this permission notice shall be included in all copies or
++ substantial portions of the Software.
++
++ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
++ BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
++ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++
++ @licend  The above is the entire license notice for the JavaScript code in this file
+  */
+ function SearchBox(name, resultsPath, inFrame, label)
+ {
+diff -Nur doxygen-1.8.14/templates/html.orig/menu.js doxygen-1.8.14/templates/html/menu.js
+--- doxygen-1.8.14/templates/html.orig/menu.js	2017-10-31 20:36:00.000000000 +0100
++++ doxygen-1.8.14/templates/html/menu.js	2025-03-04 13:22:55.619929384 +0100
+@@ -1,25 +1,26 @@
+ /*
+- @licstart  The following is the entire license notice for the
+- JavaScript code in this file.
++ @licstart  The following is the entire license notice for the JavaScript code in this file.
+ 
+- Copyright (C) 1997-2017 by Dimitri van Heesch
++ The MIT License (MIT)
+ 
+- This program is free software; you can redistribute it and/or modify
+- it under the terms of the GNU General Public License as published by
+- the Free Software Foundation; either version 2 of the License, or
+- (at your option) any later version.
+-
+- This program is distributed in the hope that it will be useful,
+- but WITHOUT ANY WARRANTY; without even the implied warranty of
+- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- GNU General Public License for more details.
+-
+- You should have received a copy of the GNU General Public License along
+- with this program; if not, write to the Free Software Foundation, Inc.,
+- 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
++ Copyright (C) 1997-2020 by Dimitri van Heesch
+ 
+- @licend  The above is the entire license notice
+- for the JavaScript code in this file
++ Permission is hereby granted, free of charge, to any person obtaining a copy of this software
++ and associated documentation files (the "Software"), to deal in the Software without restriction,
++ including without limitation the rights to use, copy, modify, merge, publish, distribute,
++ sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
++ furnished to do so, subject to the following conditions:
++
++ The above copyright notice and this permission notice shall be included in all copies or
++ substantial portions of the Software.
++
++ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
++ BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
++ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++
++ @licend  The above is the entire license notice for the JavaScript code in this file
+  */
+ function initMenu(relPath,searchEnabled,serverSide,searchPage,search) {
+   function makeTree(data,relPath) {
+@@ -40,9 +41,9 @@
+   $('#main-nav').children(':first').addClass('sm sm-dox').attr('id','main-menu');
+   if (searchEnabled) {
+     if (serverSide) {
+-      $('#main-menu').append('<li style="float:right"><div id="MSearchBox" class="MSearchBoxInactive"><div class="left"><form id="FSearchBox" action="'+searchPage+'" method="get"><img id="MSearchSelect" src="'+relPath+'search/mag.png" alt=""/><input type="text" id="MSearchField" name="query" value="'+search+'" size="20" accesskey="S" onfocus="searchBox.OnSearchFieldFocus(true)" onblur="searchBox.OnSearchFieldFocus(false)"></form></div><div class="right"></div></div></li>');
++      $('#main-menu').append('<li style="float:right"><div id="MSearchBox" class="MSearchBoxInactive"><div class="left"><form id="FSearchBox" action="'+relPath+searchPage+'" method="get"><img id="MSearchSelect" src="'+relPath+'search/mag.svg" alt=""/><input type="text" id="MSearchField" name="query" value="'+search+'" size="20" accesskey="S" onfocus="searchBox.OnSearchFieldFocus(true)" onblur="searchBox.OnSearchFieldFocus(false)"></form></div><div class="right"></div></div></li>');
+     } else {
+-      $('#main-menu').append('<li style="float:right"><div id="MSearchBox" class="MSearchBoxInactive"><span class="left"><img id="MSearchSelect" src="'+relPath+'search/mag_sel.png" onmouseover="return searchBox.OnSearchSelectShow()" onmouseout="return searchBox.OnSearchSelectHide()" alt=""/><input type="text" id="MSearchField" value="'+search+'" accesskey="S" onfocus="searchBox.OnSearchFieldFocus(true)" onblur="searchBox.OnSearchFieldFocus(false)" onkeyup="searchBox.OnSearchFieldChange(event)"/></span><span class="right"><a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="'+relPath+'search/close.png" alt=""/></a></span></div></li>');
++      $('#main-menu').append('<li style="float:right"><div id="MSearchBox" class="MSearchBoxInactive"><span class="left"><img id="MSearchSelect" src="'+relPath+'search/mag_sel.png" onmouseover="return searchBox.OnSearchSelectShow()" onmouseout="return searchBox.OnSearchSelectHide()" alt=""/><input type="text" id="MSearchField" value="'+search+'" accesskey="S" onfocus="searchBox.OnSearchFieldFocus(true)" onblur="searchBox.OnSearchFieldFocus(false)" onkeyup="searchBox.OnSearchFieldChange(event)"/></span><span class="right"><a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="'+relPath+'search/close.png" alt=""/></a></span></div></li>');
+     }
+   }
+   $('#main-menu').smartmenus();
+diff -Nur doxygen-1.8.14/templates/html.orig/navtree.css doxygen-1.8.14/templates/html/navtree.css
+--- doxygen-1.8.14/templates/html.orig/navtree.css	2017-10-31 20:36:00.000000000 +0100
++++ doxygen-1.8.14/templates/html/navtree.css	2025-03-04 13:22:48.992773395 +0100
+@@ -96,7 +96,7 @@
+ .ui-resizable-e {
+   background-image:url("splitbar.png");
+   background-size:100%;
+-  background-repeat:no-repeat;
++  background-repeat:repeat-y;
+   background-attachment: scroll;
+   cursor:ew-resize;
+   height:100%;
+diff -Nur doxygen-1.8.14/templates/html.orig/navtree.js doxygen-1.8.14/templates/html/navtree.js
+--- doxygen-1.8.14/templates/html.orig/navtree.js	2017-12-24 11:20:24.000000000 +0100
++++ doxygen-1.8.14/templates/html/navtree.js	2025-03-04 13:22:55.620929408 +0100
+@@ -1,29 +1,30 @@
+ /*
+- @licstart  The following is the entire license notice for the
+- JavaScript code in this file.
++ @licstart  The following is the entire license notice for the JavaScript code in this file.
+ 
+- Copyright (C) 1997-2017 by Dimitri van Heesch
++ The MIT License (MIT)
+ 
+- This program is free software; you can redistribute it and/or modify
+- it under the terms of the GNU General Public License as published by
+- the Free Software Foundation; either version 2 of the License, or
+- (at your option) any later version.
+-
+- This program is distributed in the hope that it will be useful,
+- but WITHOUT ANY WARRANTY; without even the implied warranty of
+- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- GNU General Public License for more details.
+-
+- You should have received a copy of the GNU General Public License along
+- with this program; if not, write to the Free Software Foundation, Inc.,
+- 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
++ Copyright (C) 1997-2020 by Dimitri van Heesch
+ 
+- @licend  The above is the entire license notice
+- for the JavaScript code in this file
++ Permission is hereby granted, free of charge, to any person obtaining a copy of this software
++ and associated documentation files (the "Software"), to deal in the Software without restriction,
++ including without limitation the rights to use, copy, modify, merge, publish, distribute,
++ sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
++ furnished to do so, subject to the following conditions:
++
++ The above copyright notice and this permission notice shall be included in all copies or
++ substantial portions of the Software.
++
++ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
++ BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
++ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++
++ @licend  The above is the entire license notice for the JavaScript code in this file
+  */
+ var navTreeSubIndices = new Array();
+ var arrowDown = '&#9660;';
+-var arrowRight = '&#9654;';
++var arrowRight = '&#9658;';
+ 
+ function getData(varName)
+ {
+@@ -70,7 +71,6 @@
+   }
+ }
+ 
+-
+ function storeLink(link)
+ {
+   if (!$("#nav-sync").hasClass('sync') && localStorageSupported()) {
+@@ -102,14 +102,6 @@
+   script.type = 'text/javascript';
+   script.onload = func;
+   script.src = scriptName+'.js';
+-  if ($.browser.msie && $.browser.version<=8) {
+-    // script.onload does not work with older versions of IE
+-    script.onreadystatechange = function() {
+-      if (script.readyState=='complete' || script.readyState=='loaded') {
+-        func(); if (show) showRoot();
+-      }
+-    }
+-  }
+   head.appendChild(script);
+ }
+ 
+@@ -153,6 +145,7 @@
+   var pos, docContent = $('#doc-content');
+   var ancParent = $(anchor.parent());
+   if (ancParent.hasClass('memItemLeft') ||
++      ancParent.hasClass('memtitle') ||
+       ancParent.hasClass('fieldname') ||
+       ancParent.hasClass('fieldtype') ||
+       ancParent.is(':header'))
+@@ -265,7 +258,7 @@
+   (function (){ // retry until we can scroll to the selected item
+     try {
+       var navtree=$('#nav-tree');
+-      navtree.scrollTo('#selected',0,{offset:-windowHeight/2});
++      navtree.scrollTo('#selected',100,{offset:-windowHeight/2});
+     } catch (err) {
+       setTimeout(arguments.callee, 0);
+     }
+@@ -284,12 +277,8 @@
+     } else {
+       if (!node.childrenVisited) {
+         getNode(o, node);
+-      } if (imm || ($.browser.msie && $.browser.version>8)) {
+-        // somehow slideDown jumps to the start of tree for IE9 :-(
+-        $(node.getChildrenUL()).show();
+-      } else {
+-        $(node.getChildrenUL()).slideDown("fast");
+       }
++      $(node.getChildrenUL()).slideDown("fast");
+       node.plus_img.innerHTML = arrowDown;
+       node.expanded = true;
+     }
+@@ -319,7 +308,6 @@
+   } else {
+     glowEffect(anchor.next(),1000); // normal member
+   }
+-  gotoAnchor(anchor,aname,false);
+ }
+ 
+ function selectAndHighlight(hash,n)
+@@ -481,6 +469,18 @@
+   }
+ }
+ 
++var loadTriggered = false;
++var readyTriggered = false;
++var loadObject,loadToRoot,loadUrl,loadRelPath;
++
++$(window).on('load',function(){
++  if (readyTriggered) { // ready first
++    navTo(loadObject,loadToRoot,loadUrl,loadRelPath);
++    showRoot();
++  }
++  loadTriggered=true;
++});
++
+ function initNavTree(toroot,relpath)
+ {
+   var o = new Object();
+@@ -511,10 +511,16 @@
+     navSync.click(function(){ toggleSyncButton(relpath); });
+   }
+ 
+-  $(window).load(function(){
++  if (loadTriggered) { // load before ready
+     navTo(o,toroot,hashUrl(),relpath);
+     showRoot();
+-  });
++  } else { // ready before load
++    loadObject  = o;
++    loadToRoot  = toroot;
++    loadUrl     = hashUrl();
++    loadRelPath = relpath;
++    readyTriggered=true;
++  }
+ 
+   $(window).bind('hashchange', function(){
+      if (window.location.hash && window.location.hash.length>1){
+diff -Nur doxygen-1.8.14/templates/html.orig/resize.js doxygen-1.8.14/templates/html/resize.js
+--- doxygen-1.8.14/templates/html.orig/resize.js	2017-10-31 20:36:00.000000000 +0100
++++ doxygen-1.8.14/templates/html/resize.js	2025-03-04 13:22:55.620929408 +0100
+@@ -1,25 +1,26 @@
+ /*
+- @licstart  The following is the entire license notice for the
+- JavaScript code in this file.
++ @licstart  The following is the entire license notice for the JavaScript code in this file.
+ 
+- Copyright (C) 1997-2017 by Dimitri van Heesch
++ The MIT License (MIT)
+ 
+- This program is free software; you can redistribute it and/or modify
+- it under the terms of the GNU General Public License as published by
+- the Free Software Foundation; either version 2 of the License, or
+- (at your option) any later version.
+-
+- This program is distributed in the hope that it will be useful,
+- but WITHOUT ANY WARRANTY; without even the implied warranty of
+- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- GNU General Public License for more details.
+-
+- You should have received a copy of the GNU General Public License along
+- with this program; if not, write to the Free Software Foundation, Inc.,
+- 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
++ Copyright (C) 1997-2020 by Dimitri van Heesch
+ 
+- @licend  The above is the entire license notice
+- for the JavaScript code in this file
++ Permission is hereby granted, free of charge, to any person obtaining a copy of this software
++ and associated documentation files (the "Software"), to deal in the Software without restriction,
++ including without limitation the rights to use, copy, modify, merge, publish, distribute,
++ sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
++ furnished to do so, subject to the following conditions:
++
++ The above copyright notice and this permission notice shall be included in all copies or
++ substantial portions of the Software.
++
++ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
++ BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
++ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++
++ @licend  The above is the entire license notice for the JavaScript code in this file
+  */
+ function initResizable()
+ {
+@@ -91,6 +92,9 @@
+       }
+       collapsedWidth=width;
+     }
++    if (location.hash.slice(1)) {
++      (document.getElementById(location.hash.slice(1))||document.body).scrollIntoView();
++    }
+   }
+ 
+   function collapseExpand()
+@@ -131,6 +135,6 @@
+   var _preventDefault = function(evt) { evt.preventDefault(); };
+   $("#splitbar").bind("dragstart", _preventDefault).bind("selectstart", _preventDefault);
+   $(".ui-resizable-handle").dblclick(collapseExpand);
+-  $(window).load(resizeHeight);
++  $(window).on('load',resizeHeight);
+ }
+ /* @license-end */
+diff -Nur doxygen-1.8.14/templates/html.orig/search.css doxygen-1.8.14/templates/html/search.css
+--- doxygen-1.8.14/templates/html.orig/search.css	2017-10-31 20:36:00.000000000 +0100
++++ doxygen-1.8.14/templates/html/search.css	2025-03-04 13:22:48.993773419 +0100
+@@ -1,98 +1,82 @@
+ /*---------------- Search Box */
+ 
+-#FSearchBox {
+-    float: left;
+-}
+-
+ #MSearchBox {
+     white-space : nowrap;
+-    float: none;
+-    margin-top: 8px;
+-    right: 0px;
+-    width: 170px;
+-    height: 24px;
++    background: white;
++    border-radius: 0.65em;
++    box-shadow: inset 0.5px 0.5px 3px 0px #555;
+     z-index: 102;
+ }
+ 
+-#MSearchBox .left
+-{
+-    display:block;
+-    position:absolute;
+-    left:10px;
+-    width:20px;
+-    height:19px;
+-    background:url('search_l.png') no-repeat;
+-    background-position:right;
++#MSearchBox .left {
++    display: inline-block;
++    vertical-align: middle;
++    height: 1.4em;
+ }
+ 
+ #MSearchSelect {
+-    display:block;
+-    position:absolute;
+-    width:20px;
+-    height:19px;
+-}
+-
+-.left #MSearchSelect {
+-    left:4px;
+-}
+-
+-.right #MSearchSelect {
+-    right:5px;
++    display: inline-block;
++    vertical-align: middle;
++    height: 1.4em;
++    padding: 0 0 0 0.3em;
++    margin: 0;
+ }
+ 
+ #MSearchField {
+-    display:block;
+-    position:absolute;
+-    height:19px;
+-    background:url('search_m.png') repeat-x;
++    display: inline-block;
++    vertical-align: middle;
++    width: 7.5em;
++    height: 1.1em;
++    margin: 0 0.15em;
++    padding: 0;
++    line-height: 1em;
+     border:none;
+-    width:115px;
+-    margin-left:20px;
+-    padding-left:4px;
+     color: #909090;
+     outline: none;
+-    font: 9pt Arial, Verdana, sans-serif;
++    font-family: Arial, Verdana, sans-serif;
+     -webkit-border-radius: 0px;
++    border-radius: 0px;
++    background: none;
+ }
+ 
+-#FSearchBox #MSearchField {
+-    margin-left:15px;
+-}
+ 
+ #MSearchBox .right {
+-    display:block;
+-    position:absolute;
+-    right:10px;
+-    top:8px;
+-    width:20px;
+-    height:19px;
+-    background:url('search_r.png') no-repeat;
+-    background-position:left;
++    display: inline-block;
++    vertical-align: middle;
++    width: 1.4em;
++    height: 1.4em;
+ }
+ 
+ #MSearchClose {
+     display: none;
+-    position: absolute;
+-    top: 4px;
++    font-size: inherit;
+     background : none;
+     border: none;
+-    margin: 0px 4px 0px 0px;
+-    padding: 0px 0px;
++    margin: 0;
++    padding: 0;
+     outline: none;
+-}
+ 
+-.left #MSearchClose {
+-    left: 6px;
+ }
+ 
+-.right #MSearchClose {
+-    right: 2px;
++#MSearchCloseImg {
++    height: 1.4em;
++    padding: 0.3em;
++    margin: 0;
+ }
+ 
+ .MSearchBoxActive #MSearchField {
+     color: #000000;
+ }
+ 
++#main-menu > li:last-child {
++    /* This <li> object is the parent of the search bar */
++    display: flex;
++    justify-content: center;
++    align-items: center;
++    height: 36px;
++    margin-right: 1em;
++}
++
+ /*---------------- Search filter selection */
+ 
+ #MSearchSelectWindow {
+@@ -220,19 +204,21 @@
+ 
+ span.SRScope {
+     padding-left: 4px;
++    font-family: Arial, Verdana, sans-serif;
+ }
+ 
+ .SRPage .SRStatus {
+     padding: 2px 5px;
+     font-size: 8pt;
+     font-style: italic;
++    font-family: Arial, Verdana, sans-serif;
+ }
+ 
+ .SRResult {
+     display: none;
+ }
+ 
+-DIV.searchresults {
++div.searchresults {
+     margin-left: 10px;
+     margin-right: 10px;
+ }
+diff -Nur doxygen-1.8.14/templates/html.orig/search.js doxygen-1.8.14/templates/html/search.js
+--- doxygen-1.8.14/templates/html.orig/search.js	2017-10-31 20:36:00.000000000 +0100
++++ doxygen-1.8.14/templates/html/search.js	2025-03-04 13:22:55.620929408 +0100
+@@ -1,25 +1,26 @@
+ /*
+- @licstart  The following is the entire license notice for the
+- JavaScript code in this file.
++ @licstart  The following is the entire license notice for the JavaScript code in this file.
+ 
+- Copyright (C) 1997-2017 by Dimitri van Heesch
++ The MIT License (MIT)
+ 
+- This program is free software; you can redistribute it and/or modify
+- it under the terms of the GNU General Public License as published by
+- the Free Software Foundation; either version 2 of the License, or
+- (at your option) any later version.
+-
+- This program is distributed in the hope that it will be useful,
+- but WITHOUT ANY WARRANTY; without even the implied warranty of
+- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- GNU General Public License for more details.
+-
+- You should have received a copy of the GNU General Public License along
+- with this program; if not, write to the Free Software Foundation, Inc.,
+- 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
++ Copyright (C) 1997-2020 by Dimitri van Heesch
+ 
+- @licend  The above is the entire license notice
+- for the JavaScript code in this file
++ Permission is hereby granted, free of charge, to any person obtaining a copy of this software
++ and associated documentation files (the "Software"), to deal in the Software without restriction,
++ including without limitation the rights to use, copy, modify, merge, publish, distribute,
++ sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
++ furnished to do so, subject to the following conditions:
++
++ The above copyright notice and this permission notice shall be included in all copies or
++ substantial portions of the Software.
++
++ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
++ BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
++ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++
++ @licend  The above is the entire license notice for the JavaScript code in this file
+  */
+ function convertToId(search)
+ {
+@@ -79,9 +80,10 @@
+           storing this instance.  Is needed to be able to set timeouts.
+    resultPath - path to use for external files
+ */
+-function SearchBox(name, resultsPath, inFrame, label)
++function SearchBox(name, resultsPath, inFrame, label, extension)
+ {
+   if (!name || !resultsPath) {  alert("Missing parameters to SearchBox."); }
++  if (!extension || extension == "") { extension = ".html"; }
+ 
+   // ---------- Instance variables
+   this.name                  = name;
+@@ -96,6 +98,7 @@
+   this.searchActive          = false;
+   this.insideFrame           = inFrame;
+   this.searchLabel           = label;
++  this.extension             = extension;
+ 
+   // ----------- DOM Elements
+ 
+@@ -200,10 +203,9 @@
+         }
+         return;
+       }
+-      else if (window.frames.MSearchResults.searchResults)
++      else
+       {
+-        var elem = window.frames.MSearchResults.searchResults.NavNext(0);
+-        if (elem) elem.focus();
++        window.frames.MSearchResults.postMessage("take_focus", "*");
+       }
+     }
+     else if (e.keyCode==27) // Escape out of the search field
+@@ -347,13 +349,13 @@
+     if (idx!=-1)
+     {
+        var hexCode=idx.toString(16);
+-       resultsPage = this.resultsPath + '/' + indexSectionNames[this.searchIndex] + '_' + hexCode + '.html';
++       resultsPage = this.resultsPath + '/' + indexSectionNames[this.searchIndex] + '_' + hexCode + this.extension;
+        resultsPageWithSearch = resultsPage+'?'+escape(searchValue);
+        hasResultsPage = true;
+     }
+     else // nothing available for this search term
+     {
+-       resultsPage = this.resultsPath + '/nomatches.html';
++       resultsPage = this.resultsPath + '/nomatches' + this.extension;
+        resultsPageWithSearch = resultsPage;
+        hasResultsPage = false;
+     }
+@@ -364,7 +366,7 @@
+     if (domPopupSearchResultsWindow.style.display!='block')
+     {
+        var domSearchBox = this.DOMSearchBox();
+-       this.DOMSearchClose().style.display = 'inline';
++       this.DOMSearchClose().style.display = 'inline-block';
+        if (this.insideFrame)
+        {
+          var domPopupSearchResults = this.DOMPopupSearchResults();
+@@ -439,12 +441,12 @@
+ 
+       while (element && element!=parentElement)
+       {
+-        if (element.nodeName == 'DIV' && element.className == 'SRChildren')
++        if (element.nodeName.toLowerCase() == 'div' && element.className == 'SRChildren')
+         {
+           return element;
+         }
+ 
+-        if (element.nodeName == 'DIV' && element.hasChildNodes())
++        if (element.nodeName.toLowerCase() == 'div' && element.hasChildNodes())
+         {
+            element = element.firstChild;
+         }
+diff -Nur doxygen-1.8.14/templates/html.orig/svgpan.js doxygen-1.8.14/templates/html/svgpan.js
+--- doxygen-1.8.14/templates/html.orig/svgpan.js	2017-10-31 20:36:00.000000000 +0100
++++ doxygen-1.8.14/templates/html/svgpan.js	2025-03-04 13:22:55.621929431 +0100
+@@ -1,57 +1,37 @@
+ /*
+- @licstart  The following is the entire license notice for the
+- JavaScript code in this file.
++ @licstart  The following is the entire license notice for the JavaScript code in this file.
++ The code below is based on SVGPan Library 1.2 and was modified for doxygen
++ to support both zooming and panning via the mouse and via embedded buttons.
++
++ This code is licensed under the following BSD license:
++
++ Copyright 2009-2010 Andrea Leofreddi <a.leofreddi@itcharm.com>. All rights reserved.
++
++ Redistribution and use in source and binary forms, with or without modification, are
++ permitted provided that the following conditions are met:
++
++    1. Redistributions of source code must retain the above copyright notice, this list of
++       conditions and the following disclaimer.
++
++    2. Redistributions in binary form must reproduce the above copyright notice, this list
++       of conditions and the following disclaimer in the documentation and/or other materials
++       provided with the distribution.
++
++ THIS SOFTWARE IS PROVIDED BY Andrea Leofreddi ``AS IS'' AND ANY EXPRESS OR IMPLIED
++ WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
++ FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL Andrea Leofreddi OR
++ CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
++ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
++ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
++ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
++ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++
++ The views and conclusions contained in the software and documentation are those of the
++ authors and should not be interpreted as representing official policies, either expressed
++ or implied, of Andrea Leofreddi.
+ 
+- Copyright (C) 1997-2017 by Dimitri van Heesch
+-
+- This program is free software; you can redistribute it and/or modify
+- it under the terms of the GNU General Public License as published by
+- the Free Software Foundation; either version 2 of the License, or
+- (at your option) any later version.
+-
+- This program is distributed in the hope that it will be useful,
+- but WITHOUT ANY WARRANTY; without even the implied warranty of
+- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- GNU General Public License for more details.
+-
+- You should have received a copy of the GNU General Public License along
+- with this program; if not, write to the Free Software Foundation, Inc.,
+- 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+-
+- @licend  The above is the entire license notice
+- for the JavaScript code in this file
+- */
+-/**
+- * The code below is based on SVGPan Library 1.2 and was modified for doxygen
+- * to support both zooming and panning via the mouse and via embedded bottons.
+- *
+- * This code is licensed under the following BSD license:
+- *
+- * Copyright 2009-2010 Andrea Leofreddi <a.leofreddi@itcharm.com>. All rights reserved.
+- *
+- * Redistribution and use in source and binary forms, with or without modification, are
+- * permitted provided that the following conditions are met:
+- *
+- *    1. Redistributions of source code must retain the above copyright notice, this list of
+- *       conditions and the following disclaimer.
+- *
+- *    2. Redistributions in binary form must reproduce the above copyright notice, this list
+- *       of conditions and the following disclaimer in the documentation and/or other materials
+- *       provided with the distribution.
+- *
+- * THIS SOFTWARE IS PROVIDED BY Andrea Leofreddi ``AS IS'' AND ANY EXPRESS OR IMPLIED
+- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL Andrea Leofreddi OR
+- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+- *
+- * The views and conclusions contained in the software and documentation are those of the
+- * authors and should not be interpreted as representing official policies, either expressed
+- * or implied, of Andrea Leofreddi.
++ @licend  The above is the entire license notice for the JavaScript code in this file
+  */
+ 
+ var root = document.documentElement;
+diff -Nur doxygen-1.8.14/templates/html.orig/tabs.css doxygen-1.8.14/templates/html/tabs.css
+--- doxygen-1.8.14/templates/html.orig/tabs.css	2025-03-04 13:01:41.264195861 +0100
++++ doxygen-1.8.14/templates/html/tabs.css	2025-03-04 13:22:48.994773442 +0100
+@@ -1 +1 @@
+-.sm{position:relative;z-index:9999}.sm,.sm ul,.sm li{display:block;list-style:none;margin:0;padding:0;line-height:normal;direction:ltr;text-align:left;-webkit-tap-highlight-color:rgba(0,0,0,0)}.sm-rtl,.sm-rtl ul,.sm-rtl li{direction:rtl;text-align:right}.sm>li>h1,.sm>li>h2,.sm>li>h3,.sm>li>h4,.sm>li>h5,.sm>li>h6{margin:0;padding:0}.sm ul{display:none}.sm li,.sm a{position:relative}.sm a{display:block}.sm a.disabled{cursor:not-allowed}.sm:after{content:"\00a0";display:block;height:0;font:0/0 serif;clear:both;visibility:hidden;overflow:hidden}.sm,.sm *,.sm *:before,.sm *:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}.main-menu-btn{position:relative;display:inline-block;width:36px;height:36px;text-indent:36px;margin-left:8px;white-space:nowrap;overflow:hidden;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)}.main-menu-btn-icon,.main-menu-btn-icon:before,.main-menu-btn-icon:after{position:absolute;top:50%;left:2px;height:2px;width:24px;background:#666;-webkit-transition:all .25s;transition:all .25s}.main-menu-btn-icon:before{content:'';top:-7px;left:0}.main-menu-btn-icon:after{content:'';top:7px;left:0}#main-menu-state:checked ~ .main-menu-btn .main-menu-btn-icon{height:0}#main-menu-state:checked ~ .main-menu-btn .main-menu-btn-icon:before{top:0;-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}#main-menu-state:checked ~ .main-menu-btn .main-menu-btn-icon:after{top:0;-webkit-transform:rotate(45deg);transform:rotate(45deg)}#main-menu-state{position:absolute;width:1px;height:1px;margin:-1px;border:0;padding:0;overflow:hidden;clip:rect(1px,1px,1px,1px)}#main-menu-state:not(:checked) ~ #main-menu{display:none}#main-menu-state:checked ~ #main-menu{display:block}@media(min-width:768px){.main-menu-btn{position:absolute;top:-99999px}#main-menu-state:not(:checked) ~ #main-menu{display:block}}.sm-dox{background-image:url("tab_b.png")}.sm-dox a,.sm-dox a:focus,.sm-dox a:hover,.sm-dox a:active{padding:0 12px;padding-right:43px;font-family:"Lucida Grande","Geneva","Helvetica",Arial,sans-serif;font-size:13px;font-weight:bold;line-height:36px;text-decoration:none;text-shadow:0 1px 1px rgba(255,255,255,0.9);color:#283a5d;outline:0}.sm-dox a:hover{background-image:url("tab_a.png");background-repeat:repeat-x;color:white;text-shadow:0 1px 1px black}.sm-dox a.current{color:#d23600}.sm-dox a.disabled{color:#bbb}.sm-dox a span.sub-arrow{position:absolute;top:50%;margin-top:-14px;left:auto;right:3px;width:28px;height:28px;overflow:hidden;font:bold 12px/28px monospace !important;text-align:center;text-shadow:none;background:rgba(255,255,255,0.5);-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px}.sm-dox a span.sub-arrow:before{display:block;content:'+'}.sm-dox a.highlighted span.sub-arrow:before{display:block;content:'-'}.sm-dox>li:first-child>a,.sm-dox>li:first-child>:not(ul) a{-moz-border-radius:5px 5px 0 0;-webkit-border-radius:5px;border-radius:5px 5px 0 0}.sm-dox>li:last-child>a,.sm-dox>li:last-child>*:not(ul) a,.sm-dox>li:last-child>ul,.sm-dox>li:last-child>ul>li:last-child>a,.sm-dox>li:last-child>ul>li:last-child>*:not(ul) a,.sm-dox>li:last-child>ul>li:last-child>ul,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>a,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>*:not(ul) a,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>a,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>*:not(ul) a,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>ul,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>a,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>*:not(ul) a,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>ul{-moz-border-radius:0 0 5px 5px;-webkit-border-radius:0;border-radius:0 0 5px 5px}.sm-dox>li:last-child>a.highlighted,.sm-dox>li:last-child>*:not(ul) a.highlighted,.sm-dox>li:last-child>ul>li:last-child>a.highlighted,.sm-dox>li:last-child>ul>li:last-child>*:not(ul) a.highlighted,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>a.highlighted,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>*:not(ul) a.highlighted,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>a.highlighted,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>*:not(ul) a.highlighted,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>a.highlighted,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>*:not(ul) a.highlighted{-moz-border-radius:0;-webkit-border-radius:0;border-radius:0}.sm-dox ul{background:rgba(162,162,162,0.1)}.sm-dox ul a,.sm-dox ul a:focus,.sm-dox ul a:hover,.sm-dox ul a:active{font-size:12px;border-left:8px solid transparent;line-height:36px;text-shadow:none;background-color:white;background-image:none}.sm-dox ul a:hover{background-image:url("tab_a.png");background-repeat:repeat-x;color:white;text-shadow:0 1px 1px black}.sm-dox ul ul a,.sm-dox ul ul a:hover,.sm-dox ul ul a:focus,.sm-dox ul ul a:active{border-left:16px solid transparent}.sm-dox ul ul ul a,.sm-dox ul ul ul a:hover,.sm-dox ul ul ul a:focus,.sm-dox ul ul ul a:active{border-left:24px solid transparent}.sm-dox ul ul ul ul a,.sm-dox ul ul ul ul a:hover,.sm-dox ul ul ul ul a:focus,.sm-dox ul ul ul ul a:active{border-left:32px solid transparent}.sm-dox ul ul ul ul ul a,.sm-dox ul ul ul ul ul a:hover,.sm-dox ul ul ul ul ul a:focus,.sm-dox ul ul ul ul ul a:active{border-left:40px solid transparent}@media(min-width:768px){.sm-dox ul{position:absolute;width:12em}.sm-dox li{float:left}.sm-dox.sm-rtl li{float:right}.sm-dox ul li,.sm-dox.sm-rtl ul li,.sm-dox.sm-vertical li{float:none}.sm-dox a{white-space:nowrap}.sm-dox ul a,.sm-dox.sm-vertical a{white-space:normal}.sm-dox .sm-nowrap>li>a,.sm-dox .sm-nowrap>li>:not(ul) a{white-space:nowrap}.sm-dox{padding:0 10px;background-image:url("tab_b.png");line-height:36px}.sm-dox a span.sub-arrow{top:50%;margin-top:-2px;right:12px;width:0;height:0;border-width:4px;border-style:solid dashed dashed dashed;border-color:#283a5d transparent transparent transparent;background:transparent;-moz-border-radius:0;-webkit-border-radius:0;border-radius:0}.sm-dox a,.sm-dox a:focus,.sm-dox a:active,.sm-dox a:hover,.sm-dox a.highlighted{padding:0 12px;background-image:url("tab_s.png");background-repeat:no-repeat;background-position:right;-moz-border-radius:0 !important;-webkit-border-radius:0;border-radius:0 !important}.sm-dox a:hover{background-image:url("tab_a.png");background-repeat:repeat-x;color:white;text-shadow:0 1px 1px black}.sm-dox a:hover span.sub-arrow{border-color:white transparent transparent transparent}.sm-dox a.has-submenu{padding-right:24px}.sm-dox li{border-top:0}.sm-dox>li>ul:before,.sm-dox>li>ul:after{content:'';position:absolute;top:-18px;left:30px;width:0;height:0;overflow:hidden;border-width:9px;border-style:dashed dashed solid dashed;border-color:transparent transparent #bbb transparent}.sm-dox>li>ul:after{top:-16px;left:31px;border-width:8px;border-color:transparent transparent #fff transparent}.sm-dox ul{border:1px solid #bbb;padding:5px 0;background:#fff;-moz-border-radius:5px !important;-webkit-border-radius:5px;border-radius:5px !important;-moz-box-shadow:0 5px 9px rgba(0,0,0,0.2);-webkit-box-shadow:0 5px 9px rgba(0,0,0,0.2);box-shadow:0 5px 9px rgba(0,0,0,0.2)}.sm-dox ul a span.sub-arrow{right:8px;top:50%;margin-top:-5px;border-width:5px;border-color:transparent transparent transparent #555;border-style:dashed dashed dashed solid}.sm-dox ul a,.sm-dox ul a:hover,.sm-dox ul a:focus,.sm-dox ul a:active,.sm-dox ul a.highlighted{color:#555;background-image:none;border:0 !important;color:#555;background-image:none}.sm-dox ul a:hover{background-image:url("tab_a.png");background-repeat:repeat-x;color:white;text-shadow:0 1px 1px black}.sm-dox ul a:hover span.sub-arrow{border-color:transparent transparent transparent white}.sm-dox span.scroll-up,.sm-dox span.scroll-down{position:absolute;display:none;visibility:hidden;overflow:hidden;background:#fff;height:36px}.sm-dox span.scroll-up:hover,.sm-dox span.scroll-down:hover{background:#eee}.sm-dox span.scroll-up:hover span.scroll-up-arrow,.sm-dox span.scroll-up:hover span.scroll-down-arrow{border-color:transparent transparent #d23600 transparent}.sm-dox span.scroll-down:hover span.scroll-down-arrow{border-color:#d23600 transparent transparent transparent}.sm-dox span.scroll-up-arrow,.sm-dox span.scroll-down-arrow{position:absolute;top:0;left:50%;margin-left:-6px;width:0;height:0;overflow:hidden;border-width:6px;border-style:dashed dashed solid dashed;border-color:transparent transparent #555 transparent}.sm-dox span.scroll-down-arrow{top:8px;border-style:solid dashed dashed dashed;border-color:#555 transparent transparent transparent}.sm-dox.sm-rtl a.has-submenu{padding-right:12px;padding-left:24px}.sm-dox.sm-rtl a span.sub-arrow{right:auto;left:12px}.sm-dox.sm-rtl.sm-vertical a.has-submenu{padding:10px 20px}.sm-dox.sm-rtl.sm-vertical a span.sub-arrow{right:auto;left:8px;border-style:dashed solid dashed dashed;border-color:transparent #555 transparent transparent}.sm-dox.sm-rtl>li>ul:before{left:auto;right:30px}.sm-dox.sm-rtl>li>ul:after{left:auto;right:31px}.sm-dox.sm-rtl ul a.has-submenu{padding:10px 20px !important}.sm-dox.sm-rtl ul a span.sub-arrow{right:auto;left:8px;border-style:dashed solid dashed dashed;border-color:transparent #555 transparent transparent}.sm-dox.sm-vertical{padding:10px 0;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px}.sm-dox.sm-vertical a{padding:10px 20px}.sm-dox.sm-vertical a:hover,.sm-dox.sm-vertical a:focus,.sm-dox.sm-vertical a:active,.sm-dox.sm-vertical a.highlighted{background:#fff}.sm-dox.sm-vertical a.disabled{background-image:url("tab_b.png")}.sm-dox.sm-vertical a span.sub-arrow{right:8px;top:50%;margin-top:-5px;border-width:5px;border-style:dashed dashed dashed solid;border-color:transparent transparent transparent #555}.sm-dox.sm-vertical>li>ul:before,.sm-dox.sm-vertical>li>ul:after{display:none}.sm-dox.sm-vertical ul a{padding:10px 20px}.sm-dox.sm-vertical ul a:hover,.sm-dox.sm-vertical ul a:focus,.sm-dox.sm-vertical ul a:active,.sm-dox.sm-vertical ul a.highlighted{background:#eee}.sm-dox.sm-vertical ul a.disabled{background:#fff}}
+\ Kein Zeilenumbruch am Dateiende.
++.sm{position:relative;z-index:9999}.sm,.sm ul,.sm li{display:block;list-style:none;margin:0;padding:0;line-height:normal;direction:ltr;text-align:left;-webkit-tap-highlight-color:rgba(0,0,0,0)}.sm-rtl,.sm-rtl ul,.sm-rtl li{direction:rtl;text-align:right}.sm>li>h1,.sm>li>h2,.sm>li>h3,.sm>li>h4,.sm>li>h5,.sm>li>h6{margin:0;padding:0}.sm ul{display:none}.sm li,.sm a{position:relative}.sm a{display:block}.sm a.disabled{cursor:not-allowed}.sm:after{content:"\00a0";display:block;height:0;font:0/0 serif;clear:both;visibility:hidden;overflow:hidden}.sm,.sm *,.sm *:before,.sm *:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}.main-menu-btn{position:relative;display:inline-block;width:36px;height:36px;text-indent:36px;margin-left:8px;white-space:nowrap;overflow:hidden;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)}.main-menu-btn-icon,.main-menu-btn-icon:before,.main-menu-btn-icon:after{position:absolute;top:50%;left:2px;height:2px;width:24px;background:#666;-webkit-transition:all .25s;transition:all .25s}.main-menu-btn-icon:before{content:'';top:-7px;left:0}.main-menu-btn-icon:after{content:'';top:7px;left:0}#main-menu-state:checked ~ .main-menu-btn .main-menu-btn-icon{height:0}#main-menu-state:checked ~ .main-menu-btn .main-menu-btn-icon:before{top:0;-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}#main-menu-state:checked ~ .main-menu-btn .main-menu-btn-icon:after{top:0;-webkit-transform:rotate(45deg);transform:rotate(45deg)}#main-menu-state{position:absolute;width:1px;height:1px;margin:-1px;border:0;padding:0;overflow:hidden;clip:rect(1px,1px,1px,1px)}#main-menu-state:not(:checked) ~ #main-menu{display:none}#main-menu-state:checked ~ #main-menu{display:block}@media(min-width:768px){.main-menu-btn{position:absolute;top:-99999px}#main-menu-state:not(:checked) ~ #main-menu{display:block}}.sm-dox{background-image:url("tab_b.png")}.sm-dox a,.sm-dox a:focus,.sm-dox a:hover,.sm-dox a:active{padding:0 12px;padding-right:43px;font-family:"Lucida Grande","Geneva","Helvetica",Arial,sans-serif;font-size:13px;font-weight:bold;line-height:36px;text-decoration:none;text-shadow:0 1px 1px rgba(255,255,255,0.9);color:#283a5d;outline:0}.sm-dox a:hover{background-image:url("tab_a.png");background-repeat:repeat-x;color:white;text-shadow:0 1px 1px black}.sm-dox a.current{color:#d23600}.sm-dox a.disabled{color:#bbb}.sm-dox a span.sub-arrow{position:absolute;top:50%;margin-top:-14px;left:auto;right:3px;width:28px;height:28px;overflow:hidden;font:bold 12px/28px monospace !important;text-align:center;text-shadow:none;background:rgba(255,255,255,0.5);-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px}.sm-dox a span.sub-arrow:before{display:block;content:'+'}.sm-dox a.highlighted span.sub-arrow:before{display:block;content:'-'}.sm-dox>li:first-child>a,.sm-dox>li:first-child>:not(ul) a{-moz-border-radius:5px 5px 0 0;-webkit-border-radius:5px;border-radius:5px 5px 0 0}.sm-dox>li:last-child>a,.sm-dox>li:last-child>*:not(ul) a,.sm-dox>li:last-child>ul,.sm-dox>li:last-child>ul>li:last-child>a,.sm-dox>li:last-child>ul>li:last-child>*:not(ul) a,.sm-dox>li:last-child>ul>li:last-child>ul,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>a,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>*:not(ul) a,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>a,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>*:not(ul) a,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>ul,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>a,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>*:not(ul) a,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>ul{-moz-border-radius:0 0 5px 5px;-webkit-border-radius:0;border-radius:0 0 5px 5px}.sm-dox>li:last-child>a.highlighted,.sm-dox>li:last-child>*:not(ul) a.highlighted,.sm-dox>li:last-child>ul>li:last-child>a.highlighted,.sm-dox>li:last-child>ul>li:last-child>*:not(ul) a.highlighted,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>a.highlighted,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>*:not(ul) a.highlighted,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>a.highlighted,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>*:not(ul) a.highlighted,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>a.highlighted,.sm-dox>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>ul>li:last-child>*:not(ul) a.highlighted{-moz-border-radius:0;-webkit-border-radius:0;border-radius:0}.sm-dox ul{background:rgba(162,162,162,0.1)}.sm-dox ul a,.sm-dox ul a:focus,.sm-dox ul a:hover,.sm-dox ul a:active{font-size:12px;border-left:8px solid transparent;line-height:36px;text-shadow:none;background-color:white;background-image:none}.sm-dox ul a:hover{background-image:url("tab_a.png");background-repeat:repeat-x;color:white;text-shadow:0 1px 1px black}.sm-dox ul ul a,.sm-dox ul ul a:hover,.sm-dox ul ul a:focus,.sm-dox ul ul a:active{border-left:16px solid transparent}.sm-dox ul ul ul a,.sm-dox ul ul ul a:hover,.sm-dox ul ul ul a:focus,.sm-dox ul ul ul a:active{border-left:24px solid transparent}.sm-dox ul ul ul ul a,.sm-dox ul ul ul ul a:hover,.sm-dox ul ul ul ul a:focus,.sm-dox ul ul ul ul a:active{border-left:32px solid transparent}.sm-dox ul ul ul ul ul a,.sm-dox ul ul ul ul ul a:hover,.sm-dox ul ul ul ul ul a:focus,.sm-dox ul ul ul ul ul a:active{border-left:40px solid transparent}@media(min-width:768px){.sm-dox ul{position:absolute;width:12em}.sm-dox li{float:left}.sm-dox.sm-rtl li{float:right}.sm-dox ul li,.sm-dox.sm-rtl ul li,.sm-dox.sm-vertical li{float:none}.sm-dox a{white-space:nowrap}.sm-dox ul a,.sm-dox.sm-vertical a{white-space:normal}.sm-dox .sm-nowrap>li>a,.sm-dox .sm-nowrap>li>:not(ul) a{white-space:nowrap}.sm-dox{padding:0 10px;background-image:url("tab_b.png");line-height:36px}.sm-dox a span.sub-arrow{top:50%;margin-top:-2px;right:12px;width:0;height:0;border-width:4px;border-style:solid dashed dashed dashed;border-color:#283a5d transparent transparent transparent;background:transparent;-moz-border-radius:0;-webkit-border-radius:0;border-radius:0}.sm-dox a,.sm-dox a:focus,.sm-dox a:active,.sm-dox a:hover,.sm-dox a.highlighted{padding:0 12px;background-image:url("tab_s.png");background-repeat:no-repeat;background-position:right;-moz-border-radius:0 !important;-webkit-border-radius:0;border-radius:0 !important}.sm-dox a:hover{background-image:url("tab_a.png");background-repeat:repeat-x;color:white;text-shadow:0 1px 1px black}.sm-dox a:hover span.sub-arrow{border-color:white transparent transparent transparent}.sm-dox a.has-submenu{padding-right:24px}.sm-dox li{border-top:0}.sm-dox>li>ul:before,.sm-dox>li>ul:after{content:'';position:absolute;top:-18px;left:30px;width:0;height:0;overflow:hidden;border-width:9px;border-style:dashed dashed solid dashed;border-color:transparent transparent #bbb transparent}.sm-dox>li>ul:after{top:-16px;left:31px;border-width:8px;border-color:transparent transparent #fff transparent}.sm-dox ul{border:1px solid #bbb;padding:5px 0;background:#fff;-moz-border-radius:5px !important;-webkit-border-radius:5px;border-radius:5px !important;-moz-box-shadow:0 5px 9px rgba(0,0,0,0.2);-webkit-box-shadow:0 5px 9px rgba(0,0,0,0.2);box-shadow:0 5px 9px rgba(0,0,0,0.2)}.sm-dox ul a span.sub-arrow{right:8px;top:50%;margin-top:-5px;border-width:5px;border-color:transparent transparent transparent #555;border-style:dashed dashed dashed solid}.sm-dox ul a,.sm-dox ul a:hover,.sm-dox ul a:focus,.sm-dox ul a:active,.sm-dox ul a.highlighted{color:#555;background-image:none;border:0 !important;color:#555;background-image:none}.sm-dox ul a:hover{background-image:url("tab_a.png");background-repeat:repeat-x;color:white;text-shadow:0 1px 1px black}.sm-dox ul a:hover span.sub-arrow{border-color:transparent transparent transparent white}.sm-dox span.scroll-up,.sm-dox span.scroll-down{position:absolute;display:none;visibility:hidden;overflow:hidden;background:#fff;height:36px}.sm-dox span.scroll-up:hover,.sm-dox span.scroll-down:hover{background:#eee}.sm-dox span.scroll-up:hover span.scroll-up-arrow,.sm-dox span.scroll-up:hover span.scroll-down-arrow{border-color:transparent transparent #d23600 transparent}.sm-dox span.scroll-down:hover span.scroll-down-arrow{border-color:#d23600 transparent transparent transparent}.sm-dox span.scroll-up-arrow,.sm-dox span.scroll-down-arrow{position:absolute;top:0;left:50%;margin-left:-6px;width:0;height:0;overflow:hidden;border-width:6px;border-style:dashed dashed solid dashed;border-color:transparent transparent #555 transparent}.sm-dox span.scroll-down-arrow{top:8px;border-style:solid dashed dashed dashed;border-color:#555 transparent transparent transparent}.sm-dox.sm-rtl a.has-submenu{padding-right:12px;padding-left:24px}.sm-dox.sm-rtl a span.sub-arrow{right:auto;left:12px}.sm-dox.sm-rtl.sm-vertical a.has-submenu{padding:10px 20px}.sm-dox.sm-rtl.sm-vertical a span.sub-arrow{right:auto;left:8px;border-style:dashed solid dashed dashed;border-color:transparent #555 transparent transparent}.sm-dox.sm-rtl>li>ul:before{left:auto;right:30px}.sm-dox.sm-rtl>li>ul:after{left:auto;right:31px}.sm-dox.sm-rtl ul a.has-submenu{padding:10px 20px !important}.sm-dox.sm-rtl ul a span.sub-arrow{right:auto;left:8px;border-style:dashed solid dashed dashed;border-color:transparent #555 transparent transparent}.sm-dox.sm-vertical{padding:10px 0;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px}.sm-dox.sm-vertical a{padding:10px 20px}.sm-dox.sm-vertical a:hover,.sm-dox.sm-vertical a:focus,.sm-dox.sm-vertical a:active,.sm-dox.sm-vertical a.highlighted{background:#fff}.sm-dox.sm-vertical a.disabled{background-image:url("tab_b.png")}.sm-dox.sm-vertical a span.sub-arrow{right:8px;top:50%;margin-top:-5px;border-width:5px;border-style:dashed dashed dashed solid;border-color:transparent transparent transparent #555}.sm-dox.sm-vertical>li>ul:before,.sm-dox.sm-vertical>li>ul:after{display:none}.sm-dox.sm-vertical ul a{padding:10px 20px}.sm-dox.sm-vertical ul a:hover,.sm-dox.sm-vertical ul a:focus,.sm-dox.sm-vertical ul a:active,.sm-dox.sm-vertical ul a.highlighted{background:#eee}.sm-dox.sm-vertical ul a.disabled{background:#fff}}

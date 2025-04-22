@@ -8,7 +8,7 @@ Summary: A documentation system for C/C++
 Name:    doxygen
 Epoch:   1
 Version: 1.8.14
-Release: 13%{?dist}
+Release: 14%{?dist}
 
 # No version is specified.
 License: GPL+
@@ -19,6 +19,7 @@ Source1: doxywizard.png
 Source2: doxywizard.desktop
 
 Patch0: doxygen-1.8.14-jquery-CVE-2020-11023-CVE-2020-11022.patch
+Patch1: doxygen-1.8.14-RHEL-81116.patch
 
 # upstream patches
 
@@ -180,6 +181,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
 %endif
 
 %changelog
+* Mon Mar 10 2025 Than Ngo <than@redhat.com> - 1:1.8.14-14
+- Resolves: RHEL-81116, Treeview does not work
+
 * Fri Feb 07 2025 Than Ngo <than@redhat.com> - 1:1.8.14-13
 - Resolves: RHEL-78141, CVE-2020-11023, CVE-2020-11022
 
